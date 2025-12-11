@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tailwind Demo</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Optional: Customize via Tailwind config in JS -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#2f855a',
+                    },
+                },
+            }
+        };
+    </script>
+</head>
+
+<body class="p-10">
+<h1 class="text-4xl font-bold text-brand">Tailwind Demo Page</h1>
+<p class="mt-4 text-lg">This site is hosted on GitHub Pages using Tailwind CDN.</p>
+
+<button class="mt-8 bg-brand text-white px-4 py-2 rounded hover:bg-green-700">
+    Button Demo
+</button>
+</body>
+</html>
