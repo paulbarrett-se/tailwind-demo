@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tailwind CSS Flexbox Guide</title>
+    <title>Tailwind CSS Reference Guide</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -40,27 +40,92 @@
         .code-block {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
         }
+        .tab-btn.active {
+            border-color: #2dd4bf;
+            color: #2dd4bf;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
     </style>
+
+    <script>
+        function switchTab(tabId) {
+            // Hide all tab content
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Remove active from all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // Show selected tab content
+            document.getElementById(tabId + '-tab').classList.add('active');
+            // Mark selected button as active
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+            // Update sub-navigation
+            document.querySelectorAll('.sub-nav').forEach(nav => {
+                nav.classList.add('hidden');
+            });
+            document.getElementById(tabId + '-nav')?.classList.remove('hidden');
+            // Scroll to top of main content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
 </head>
 
 <body class="bg-midnight text-gray-100 font-sans leading-relaxed">
 
     <!-- Header -->
     <header class="bg-gradient-to-r from-ocean to-midnight border-b border-gray-700/50 sticky top-0 z-50 backdrop-blur-sm">
-        <div class="max-w-6xl mx-auto px-6 py-4">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <h1 class="text-2xl font-bold text-white">
-                <span class="text-seafoam">Tailwind</span> Flexbox Guide
+                <span class="text-seafoam">Tailwind</span> Reference Guide
             </h1>
+            <!-- Tab Buttons -->
+            <div class="flex gap-2">
+                <button 
+                    class="tab-btn active px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-seafoam transition-colors"
+                    data-tab="basics"
+                    onclick="switchTab('basics')"
+                >
+                    Basics
+                </button>
+                <button 
+                    class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent text-gray-400 hover:text-seafoam transition-colors"
+                    data-tab="flexbox"
+                    onclick="switchTab('flexbox')"
+                >
+                    Flexbox
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Navigation / Table of Contents -->
-    <nav class="bg-midnight/80 border-b border-gray-800 sticky top-14 z-40 backdrop-blur-sm">
+    <!-- Sub-Navigation for Basics -->
+    <nav id="basics-nav" class="sub-nav bg-midnight/80 border-b border-gray-800 sticky top-[60px] z-40 backdrop-blur-sm">
         <div class="max-w-6xl mx-auto px-6 py-3 overflow-x-auto">
             <ul class="flex gap-6 text-sm whitespace-nowrap">
-                <li><a href="#intro" class="text-gray-400 hover:text-seafoam transition-colors">Intro</a></li>
-                <li class="text-gray-600">|</li>
-                <li><a href="#display" class="text-gray-400 hover:text-seafoam transition-colors">display</a></li>
+                <li><a href="#spacing" class="text-gray-400 hover:text-seafoam transition-colors">Spacing</a></li>
+                <li><a href="#sizing" class="text-gray-400 hover:text-seafoam transition-colors">Sizing</a></li>
+                <li><a href="#colors" class="text-gray-400 hover:text-seafoam transition-colors">Colors</a></li>
+                <li><a href="#typography" class="text-gray-400 hover:text-seafoam transition-colors">Typography</a></li>
+                <li><a href="#borders" class="text-gray-400 hover:text-seafoam transition-colors">Borders</a></li>
+                <li><a href="#display-visibility" class="text-gray-400 hover:text-seafoam transition-colors">Display</a></li>
+                <li><a href="#responsive" class="text-gray-400 hover:text-coral transition-colors">Responsive</a></li>
+                <li><a href="#states" class="text-gray-400 hover:text-coral transition-colors">States</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Sub-Navigation for Flexbox -->
+    <nav id="flexbox-nav" class="sub-nav hidden bg-midnight/80 border-b border-gray-800 sticky top-[60px] z-40 backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto px-6 py-3 overflow-x-auto">
+            <ul class="flex gap-6 text-sm whitespace-nowrap">
+                <li><a href="#flex-display" class="text-gray-400 hover:text-seafoam transition-colors">display</a></li>
                 <li><a href="#flex-direction" class="text-gray-400 hover:text-seafoam transition-colors">flex-direction</a></li>
                 <li><a href="#flex-wrap" class="text-gray-400 hover:text-seafoam transition-colors">flex-wrap</a></li>
                 <li><a href="#justify-content" class="text-gray-400 hover:text-seafoam transition-colors">justify-content</a></li>
@@ -72,7 +137,7 @@
                 <li><a href="#flex-grow" class="text-gray-400 hover:text-coral transition-colors">flex-grow</a></li>
                 <li><a href="#flex-shrink" class="text-gray-400 hover:text-coral transition-colors">flex-shrink</a></li>
                 <li><a href="#flex-basis" class="text-gray-400 hover:text-coral transition-colors">flex-basis</a></li>
-                <li><a href="#flex" class="text-gray-400 hover:text-coral transition-colors">flex</a></li>
+                <li><a href="#flex-shorthand" class="text-gray-400 hover:text-coral transition-colors">flex</a></li>
                 <li><a href="#align-self" class="text-gray-400 hover:text-coral transition-colors">align-self</a></li>
             </ul>
         </div>
@@ -80,22 +145,475 @@
 
     <main class="max-w-6xl mx-auto px-6 py-12">
 
-        <!-- Introduction -->
-        <section id="intro" class="mb-16">
-            <h2 class="text-4xl font-bold mb-6 text-white">CSS Flexbox → Tailwind</h2>
-            <p class="text-gray-300 text-lg max-w-3xl mb-6">
-                A quick reference guide mapping CSS Flexbox properties to their Tailwind CSS utility classes. 
-                Perfect for presentations and day-to-day development.
-            </p>
-            <div class="flex gap-4 text-sm">
-                <span class="px-3 py-1 rounded-full bg-seafoam/20 text-seafoam border border-seafoam/30">Parent Properties</span>
-                <span class="px-3 py-1 rounded-full bg-coral/20 text-coral border border-coral/30">Child Properties</span>
-            </div>
-        </section>
+        <!-- ============================================== -->
+        <!-- BASICS TAB                                    -->
+        <!-- ============================================== -->
+        <div id="basics-tab" class="tab-content active">
+
+            <!-- Introduction -->
+            <section class="mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-white">Tailwind CSS Basics</h2>
+                <p class="text-gray-300 text-lg max-w-3xl mb-6">
+                    Essential Tailwind utility classes for everyday development. 
+                    A quick reference for spacing, sizing, colors, typography, and more.
+                </p>
+            </section>
+
+            <!-- SPACING -->
+            <section id="spacing" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Spacing</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Padding and margin utilities. The scale uses 0.25rem (4px) increments.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Padding</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">p-4</span>    <span class="text-gray-500">/* 1rem all sides */</span>
+<span class="text-coral">px-4</span>   <span class="text-gray-500">/* 1rem left + right */</span>
+<span class="text-coral">py-4</span>   <span class="text-gray-500">/* 1rem top + bottom */</span>
+<span class="text-coral">pt-4</span>   <span class="text-gray-500">/* 1rem top */</span>
+<span class="text-coral">pr-4</span>   <span class="text-gray-500">/* 1rem right */</span>
+<span class="text-coral">pb-4</span>   <span class="text-gray-500">/* 1rem bottom */</span>
+<span class="text-coral">pl-4</span>   <span class="text-gray-500">/* 1rem left */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Margin</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">m-4</span>    <span class="text-gray-500">/* 1rem all sides */</span>
+<span class="text-coral">mx-4</span>   <span class="text-gray-500">/* 1rem left + right */</span>
+<span class="text-coral">my-4</span>   <span class="text-gray-500">/* 1rem top + bottom */</span>
+<span class="text-coral">mt-4</span>   <span class="text-gray-500">/* 1rem top */</span>
+<span class="text-coral">mr-4</span>   <span class="text-gray-500">/* 1rem right */</span>
+<span class="text-coral">mb-4</span>   <span class="text-gray-500">/* 1rem bottom */</span>
+<span class="text-coral">ml-4</span>   <span class="text-gray-500">/* 1rem left */</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Common Scale Values</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">p-0</span>    <span class="text-gray-500">/* 0px */</span>
+<span class="text-coral">p-1</span>    <span class="text-gray-500">/* 0.25rem (4px) */</span>
+<span class="text-coral">p-2</span>    <span class="text-gray-500">/* 0.5rem (8px) */</span>
+<span class="text-coral">p-3</span>    <span class="text-gray-500">/* 0.75rem (12px) */</span>
+<span class="text-coral">p-4</span>    <span class="text-gray-500">/* 1rem (16px) */</span>
+<span class="text-coral">p-6</span>    <span class="text-gray-500">/* 1.5rem (24px) */</span>
+<span class="text-coral">p-8</span>    <span class="text-gray-500">/* 2rem (32px) */</span>
+<span class="text-coral">p-12</span>   <span class="text-gray-500">/* 3rem (48px) */</span>
+<span class="text-coral">p-16</span>   <span class="text-gray-500">/* 4rem (64px) */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Space Between (Children)</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">space-x-4</span>  <span class="text-gray-500">/* horizontal gap between children */</span>
+<span class="text-coral">space-y-4</span>  <span class="text-gray-500">/* vertical gap between children */</span>
+
+<span class="text-gray-500">/* Negative values */</span>
+<span class="text-coral">-m-4</span>       <span class="text-gray-500">/* -1rem margin */</span>
+<span class="text-coral">-mt-2</span>      <span class="text-gray-500">/* -0.5rem top margin */</span>
+
+<span class="text-gray-500">/* Auto margins */</span>
+<span class="text-coral">mx-auto</span>    <span class="text-gray-500">/* center horizontally */</span>
+<span class="text-coral">ml-auto</span>    <span class="text-gray-500">/* push to right */</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SIZING -->
+            <section id="sizing" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Sizing</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Width and height utilities for controlling element dimensions.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Width</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">w-4</span>       <span class="text-gray-500">/* 1rem (16px) */</span>
+<span class="text-coral">w-16</span>      <span class="text-gray-500">/* 4rem (64px) */</span>
+<span class="text-coral">w-64</span>      <span class="text-gray-500">/* 16rem (256px) */</span>
+<span class="text-coral">w-1/2</span>     <span class="text-gray-500">/* 50% */</span>
+<span class="text-coral">w-1/3</span>     <span class="text-gray-500">/* 33.333% */</span>
+<span class="text-coral">w-full</span>    <span class="text-gray-500">/* 100% */</span>
+<span class="text-coral">w-screen</span>  <span class="text-gray-500">/* 100vw */</span>
+<span class="text-coral">w-auto</span>    <span class="text-gray-500">/* auto */</span>
+<span class="text-coral">w-fit</span>     <span class="text-gray-500">/* fit-content */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Height</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">h-4</span>       <span class="text-gray-500">/* 1rem (16px) */</span>
+<span class="text-coral">h-16</span>      <span class="text-gray-500">/* 4rem (64px) */</span>
+<span class="text-coral">h-64</span>      <span class="text-gray-500">/* 16rem (256px) */</span>
+<span class="text-coral">h-1/2</span>     <span class="text-gray-500">/* 50% */</span>
+<span class="text-coral">h-full</span>    <span class="text-gray-500">/* 100% */</span>
+<span class="text-coral">h-screen</span>  <span class="text-gray-500">/* 100vh */</span>
+<span class="text-coral">h-auto</span>    <span class="text-gray-500">/* auto */</span>
+<span class="text-coral">h-fit</span>     <span class="text-gray-500">/* fit-content */</span>
+<span class="text-coral">h-dvh</span>     <span class="text-gray-500">/* 100dvh (dynamic) */</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Min/Max Width</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">min-w-0</span>       <span class="text-gray-500">/* min-width: 0 */</span>
+<span class="text-coral">min-w-full</span>    <span class="text-gray-500">/* min-width: 100% */</span>
+<span class="text-coral">max-w-xs</span>      <span class="text-gray-500">/* 20rem (320px) */</span>
+<span class="text-coral">max-w-md</span>      <span class="text-gray-500">/* 28rem (448px) */</span>
+<span class="text-coral">max-w-lg</span>      <span class="text-gray-500">/* 32rem (512px) */</span>
+<span class="text-coral">max-w-xl</span>      <span class="text-gray-500">/* 36rem (576px) */</span>
+<span class="text-coral">max-w-2xl</span>     <span class="text-gray-500">/* 42rem (672px) */</span>
+<span class="text-coral">max-w-screen-lg</span> <span class="text-gray-500">/* 1024px */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Min/Max Height</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">min-h-0</span>       <span class="text-gray-500">/* min-height: 0 */</span>
+<span class="text-coral">min-h-full</span>    <span class="text-gray-500">/* min-height: 100% */</span>
+<span class="text-coral">min-h-screen</span>  <span class="text-gray-500">/* min-height: 100vh */</span>
+<span class="text-coral">max-h-64</span>      <span class="text-gray-500">/* max-height: 16rem */</span>
+<span class="text-coral">max-h-full</span>    <span class="text-gray-500">/* max-height: 100% */</span>
+<span class="text-coral">max-h-screen</span>  <span class="text-gray-500">/* max-height: 100vh */</span>
+
+<span class="text-gray-500">/* Size (w + h combined) */</span>
+<span class="text-coral">size-4</span>        <span class="text-gray-500">/* 1rem width & height */</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COLORS -->
+            <section id="colors" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Colors</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Text, background, and border colors. Shades range from 50 (lightest) to 950 (darkest).</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Text Colors</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">text-white</span>      <span class="text-gray-500">/* #fff */</span>
+<span class="text-coral">text-black</span>      <span class="text-gray-500">/* #000 */</span>
+<span class="text-coral">text-gray-500</span>   <span class="text-gray-500">/* medium gray */</span>
+<span class="text-coral">text-red-500</span>    <span class="text-gray-500">/* medium red */</span>
+<span class="text-coral">text-blue-600</span>   <span class="text-gray-500">/* darker blue */</span>
+<span class="text-coral">text-green-400</span>  <span class="text-gray-500">/* lighter green */</span>
+<span class="text-coral">text-transparent</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Background Colors</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">bg-white</span>        <span class="text-gray-500">/* #fff */</span>
+<span class="text-coral">bg-black</span>        <span class="text-gray-500">/* #000 */</span>
+<span class="text-coral">bg-gray-100</span>     <span class="text-gray-500">/* very light gray */</span>
+<span class="text-coral">bg-slate-800</span>    <span class="text-gray-500">/* dark slate */</span>
+<span class="text-coral">bg-indigo-500</span>   <span class="text-gray-500">/* medium indigo */</span>
+<span class="text-coral">bg-transparent</span>
+
+<span class="text-gray-500">/* Opacity */</span>
+<span class="text-coral">bg-black/50</span>     <span class="text-gray-500">/* 50% opacity */</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                    <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Default Color Palette</div>
+                    <pre class="font-mono text-sm"><code><span class="text-gray-500">/* Available colors: */</span>
+<span class="text-coral">slate</span>  <span class="text-coral">gray</span>  <span class="text-coral">zinc</span>  <span class="text-coral">neutral</span>  <span class="text-coral">stone</span>
+<span class="text-coral">red</span>  <span class="text-coral">orange</span>  <span class="text-coral">amber</span>  <span class="text-coral">yellow</span>  <span class="text-coral">lime</span>  <span class="text-coral">green</span>  <span class="text-coral">emerald</span>  <span class="text-coral">teal</span>  <span class="text-coral">cyan</span>
+<span class="text-coral">sky</span>  <span class="text-coral">blue</span>  <span class="text-coral">indigo</span>  <span class="text-coral">violet</span>  <span class="text-coral">purple</span>  <span class="text-coral">fuchsia</span>  <span class="text-coral">pink</span>  <span class="text-coral">rose</span>
+
+<span class="text-gray-500">/* Shades: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950 */</span></code></pre>
+                </div>
+            </section>
+
+            <!-- TYPOGRAPHY -->
+            <section id="typography" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Typography</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Font size, weight, line height, and text alignment utilities.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Font Size</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">text-xs</span>    <span class="text-gray-500">/* 0.75rem (12px) */</span>
+<span class="text-coral">text-sm</span>    <span class="text-gray-500">/* 0.875rem (14px) */</span>
+<span class="text-coral">text-base</span>  <span class="text-gray-500">/* 1rem (16px) */</span>
+<span class="text-coral">text-lg</span>    <span class="text-gray-500">/* 1.125rem (18px) */</span>
+<span class="text-coral">text-xl</span>    <span class="text-gray-500">/* 1.25rem (20px) */</span>
+<span class="text-coral">text-2xl</span>   <span class="text-gray-500">/* 1.5rem (24px) */</span>
+<span class="text-coral">text-3xl</span>   <span class="text-gray-500">/* 1.875rem (30px) */</span>
+<span class="text-coral">text-4xl</span>   <span class="text-gray-500">/* 2.25rem (36px) */</span>
+<span class="text-coral">text-5xl</span>   <span class="text-gray-500">/* 3rem (48px) */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Font Weight</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">font-thin</span>       <span class="text-gray-500">/* 100 */</span>
+<span class="text-coral">font-light</span>      <span class="text-gray-500">/* 300 */</span>
+<span class="text-coral">font-normal</span>     <span class="text-gray-500">/* 400 */</span>
+<span class="text-coral">font-medium</span>     <span class="text-gray-500">/* 500 */</span>
+<span class="text-coral">font-semibold</span>   <span class="text-gray-500">/* 600 */</span>
+<span class="text-coral">font-bold</span>       <span class="text-gray-500">/* 700 */</span>
+<span class="text-coral">font-extrabold</span>  <span class="text-gray-500">/* 800 */</span>
+<span class="text-coral">font-black</span>      <span class="text-gray-500">/* 900 */</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Line Height & Tracking</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">leading-none</span>     <span class="text-gray-500">/* 1 */</span>
+<span class="text-coral">leading-tight</span>    <span class="text-gray-500">/* 1.25 */</span>
+<span class="text-coral">leading-normal</span>   <span class="text-gray-500">/* 1.5 */</span>
+<span class="text-coral">leading-relaxed</span>  <span class="text-gray-500">/* 1.625 */</span>
+<span class="text-coral">leading-loose</span>    <span class="text-gray-500">/* 2 */</span>
+
+<span class="text-coral">tracking-tight</span>   <span class="text-gray-500">/* -0.025em */</span>
+<span class="text-coral">tracking-normal</span>  <span class="text-gray-500">/* 0 */</span>
+<span class="text-coral">tracking-wide</span>    <span class="text-gray-500">/* 0.025em */</span>
+<span class="text-coral">tracking-wider</span>   <span class="text-gray-500">/* 0.05em */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Text Alignment & Style</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">text-left</span>      <span class="text-coral">text-center</span>    <span class="text-coral">text-right</span>
+
+<span class="text-coral">italic</span>         <span class="text-gray-500">/* font-style: italic */</span>
+<span class="text-coral">not-italic</span>     <span class="text-gray-500">/* font-style: normal */</span>
+<span class="text-coral">uppercase</span>      <span class="text-coral">lowercase</span>      <span class="text-coral">capitalize</span>
+<span class="text-coral">underline</span>      <span class="text-coral">line-through</span>   <span class="text-coral">no-underline</span>
+
+<span class="text-coral">truncate</span>       <span class="text-gray-500">/* overflow ellipsis */</span>
+<span class="text-coral">whitespace-nowrap</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BORDERS -->
+            <section id="borders" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Borders & Rounded</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Border width, style, color, and border-radius utilities.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Border Width</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">border</span>      <span class="text-gray-500">/* 1px all sides */</span>
+<span class="text-coral">border-0</span>    <span class="text-gray-500">/* 0px */</span>
+<span class="text-coral">border-2</span>    <span class="text-gray-500">/* 2px */</span>
+<span class="text-coral">border-4</span>    <span class="text-gray-500">/* 4px */</span>
+<span class="text-coral">border-8</span>    <span class="text-gray-500">/* 8px */</span>
+
+<span class="text-gray-500">/* Single sides */</span>
+<span class="text-coral">border-t</span>    <span class="text-gray-500">/* top only */</span>
+<span class="text-coral">border-r</span>    <span class="text-gray-500">/* right only */</span>
+<span class="text-coral">border-b</span>    <span class="text-gray-500">/* bottom only */</span>
+<span class="text-coral">border-l</span>    <span class="text-gray-500">/* left only */</span>
+<span class="text-coral">border-x</span>    <span class="text-gray-500">/* left + right */</span>
+<span class="text-coral">border-y</span>    <span class="text-gray-500">/* top + bottom */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Border Radius</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">rounded-none</span>   <span class="text-gray-500">/* 0 */</span>
+<span class="text-coral">rounded-sm</span>     <span class="text-gray-500">/* 0.125rem (2px) */</span>
+<span class="text-coral">rounded</span>        <span class="text-gray-500">/* 0.25rem (4px) */</span>
+<span class="text-coral">rounded-md</span>     <span class="text-gray-500">/* 0.375rem (6px) */</span>
+<span class="text-coral">rounded-lg</span>     <span class="text-gray-500">/* 0.5rem (8px) */</span>
+<span class="text-coral">rounded-xl</span>     <span class="text-gray-500">/* 0.75rem (12px) */</span>
+<span class="text-coral">rounded-2xl</span>    <span class="text-gray-500">/* 1rem (16px) */</span>
+<span class="text-coral">rounded-full</span>   <span class="text-gray-500">/* 9999px (circle) */</span>
+
+<span class="text-gray-500">/* Single corners: rounded-t, rounded-r, rounded-b, rounded-l */</span>
+<span class="text-gray-500">/* Or: rounded-tl, rounded-tr, rounded-bl, rounded-br */</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                    <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Border Color & Style</div>
+                    <pre class="font-mono text-sm"><code><span class="text-coral">border-gray-300</span>   <span class="text-gray-500">/* light gray border */</span>
+<span class="text-coral">border-red-500</span>    <span class="text-gray-500">/* red border */</span>
+<span class="text-coral">border-transparent</span>
+
+<span class="text-coral">border-solid</span>      <span class="text-gray-500">/* default */</span>
+<span class="text-coral">border-dashed</span>     <span class="text-coral">border-dotted</span>     <span class="text-coral">border-none</span>
+
+<span class="text-gray-500">/* Divide (borders between children) */</span>
+<span class="text-coral">divide-x</span>          <span class="text-gray-500">/* vertical dividers */</span>
+<span class="text-coral">divide-y</span>          <span class="text-gray-500">/* horizontal dividers */</span>
+<span class="text-coral">divide-gray-200</span>   <span class="text-gray-500">/* divider color */</span></code></pre>
+                </div>
+            </section>
+
+            <!-- DISPLAY & VISIBILITY -->
+            <section id="display-visibility" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Display & Visibility</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Control how elements are displayed and whether they're visible.</p>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Display</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">block</span>         <span class="text-gray-500">/* display: block */</span>
+<span class="text-coral">inline-block</span>  <span class="text-gray-500">/* display: inline-block */</span>
+<span class="text-coral">inline</span>        <span class="text-gray-500">/* display: inline */</span>
+<span class="text-coral">flex</span>          <span class="text-gray-500">/* display: flex */</span>
+<span class="text-coral">inline-flex</span>   <span class="text-gray-500">/* display: inline-flex */</span>
+<span class="text-coral">grid</span>          <span class="text-gray-500">/* display: grid */</span>
+<span class="text-coral">inline-grid</span>   <span class="text-gray-500">/* display: inline-grid */</span>
+<span class="text-coral">contents</span>      <span class="text-gray-500">/* display: contents */</span>
+<span class="text-coral">hidden</span>        <span class="text-gray-500">/* display: none */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Visibility & Overflow</div>
+                        <pre class="font-mono text-sm"><code><span class="text-coral">visible</span>          <span class="text-gray-500">/* visibility: visible */</span>
+<span class="text-coral">invisible</span>        <span class="text-gray-500">/* visibility: hidden */</span>
+                   <span class="text-gray-500">/* (keeps layout space) */</span>
+
+<span class="text-coral">overflow-auto</span>    <span class="text-gray-500">/* scroll if needed */</span>
+<span class="text-coral">overflow-hidden</span>  <span class="text-gray-500">/* clip overflow */</span>
+<span class="text-coral">overflow-scroll</span>  <span class="text-gray-500">/* always scroll */</span>
+<span class="text-coral">overflow-x-auto</span>  <span class="text-gray-500">/* horizontal only */</span>
+<span class="text-coral">overflow-y-auto</span>  <span class="text-gray-500">/* vertical only */</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RESPONSIVE PREFIXES -->
+            <section id="responsive" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-coral uppercase tracking-wider mb-2">Responsive Prefixes</h3>
+                    <div class="h-px bg-gradient-to-r from-coral to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Apply styles at specific breakpoints. Tailwind is mobile-first: unprefixed utilities apply to all sizes, prefixed utilities apply at that breakpoint and above.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-coral/30">
+                        <div class="text-xs text-coral uppercase tracking-wider mb-2">Breakpoints</div>
+                        <pre class="font-mono text-sm"><code><span class="text-seafoam">sm:</span>   <span class="text-gray-500">/* 640px and up */</span>
+<span class="text-seafoam">md:</span>   <span class="text-gray-500">/* 768px and up */</span>
+<span class="text-seafoam">lg:</span>   <span class="text-gray-500">/* 1024px and up */</span>
+<span class="text-seafoam">xl:</span>   <span class="text-gray-500">/* 1280px and up */</span>
+<span class="text-seafoam">2xl:</span>  <span class="text-gray-500">/* 1536px and up */</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-coral/30">
+                        <div class="text-xs text-coral uppercase tracking-wider mb-2">Usage Examples</div>
+                        <pre class="font-mono text-sm"><code><span class="text-gray-500">/* Stack on mobile, row on larger screens */</span>
+<span class="text-coral">flex flex-col</span> <span class="text-seafoam">md:</span><span class="text-coral">flex-row</span>
+
+<span class="text-gray-500">/* Hide on mobile, show on desktop */</span>
+<span class="text-coral">hidden</span> <span class="text-seafoam">lg:</span><span class="text-coral">block</span>
+
+<span class="text-gray-500">/* Responsive padding */</span>
+<span class="text-coral">p-4</span> <span class="text-seafoam">md:</span><span class="text-coral">p-8</span> <span class="text-seafoam">lg:</span><span class="text-coral">p-12</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-coral/10 border border-coral/30 rounded-lg">
+                    <p class="text-sm text-coral font-medium mb-1">Mobile-First Principle</p>
+                    <p class="text-sm text-gray-300">Start with mobile styles (no prefix), then add larger breakpoint overrides. <code class="text-seafoam">text-sm md:text-base lg:text-lg</code> means: small text on mobile, base on tablets, large on desktop.</p>
+                </div>
+            </section>
+
+            <!-- STATE VARIANTS -->
+            <section id="states" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-coral uppercase tracking-wider mb-2">State Variants</h3>
+                    <div class="h-px bg-gradient-to-r from-coral to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Apply styles conditionally based on user interaction or element state.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-coral/30">
+                        <div class="text-xs text-coral uppercase tracking-wider mb-2">Interactive States</div>
+                        <pre class="font-mono text-sm"><code><span class="text-seafoam">hover:</span>     <span class="text-gray-500">/* mouse over */</span>
+<span class="text-seafoam">focus:</span>     <span class="text-gray-500">/* keyboard/click focus */</span>
+<span class="text-seafoam">active:</span>    <span class="text-gray-500">/* being clicked */</span>
+<span class="text-seafoam">visited:</span>   <span class="text-gray-500">/* visited link */</span>
+
+<span class="text-gray-500">/* Examples */</span>
+<span class="text-seafoam">hover:</span><span class="text-coral">bg-blue-600</span>
+<span class="text-seafoam">focus:</span><span class="text-coral">outline-none</span>
+<span class="text-seafoam">focus:</span><span class="text-coral">ring-2</span>
+<span class="text-seafoam">active:</span><span class="text-coral">scale-95</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-coral/30">
+                        <div class="text-xs text-coral uppercase tracking-wider mb-2">Form States</div>
+                        <pre class="font-mono text-sm"><code><span class="text-seafoam">disabled:</span>    <span class="text-gray-500">/* disabled inputs */</span>
+<span class="text-seafoam">checked:</span>     <span class="text-gray-500">/* checked checkbox/radio */</span>
+<span class="text-seafoam">required:</span>    <span class="text-gray-500">/* required inputs */</span>
+<span class="text-seafoam">invalid:</span>     <span class="text-gray-500">/* invalid inputs */</span>
+<span class="text-seafoam">placeholder:</span> <span class="text-gray-500">/* placeholder text */</span>
+
+<span class="text-gray-500">/* Examples */</span>
+<span class="text-seafoam">disabled:</span><span class="text-coral">opacity-50</span>
+<span class="text-seafoam">disabled:</span><span class="text-coral">cursor-not-allowed</span>
+<span class="text-seafoam">placeholder:</span><span class="text-coral">text-gray-400</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Group & Peer</div>
+                        <pre class="font-mono text-sm"><code><span class="text-gray-500">/* Style children based on parent hover */</span>
+&lt;div class="<span class="text-coral">group</span>"&gt;
+  &lt;p class="<span class="text-seafoam">group-hover:</span><span class="text-coral">text-blue-500</span>"&gt;
+&lt;/div&gt;
+
+<span class="text-gray-500">/* Style siblings based on input state */</span>
+&lt;input class="<span class="text-coral">peer</span>" /&gt;
+&lt;p class="<span class="text-seafoam">peer-invalid:</span><span class="text-coral">text-red-500</span>"&gt;</code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Other Variants</div>
+                        <pre class="font-mono text-sm"><code><span class="text-seafoam">first:</span>      <span class="text-gray-500">/* first child */</span>
+<span class="text-seafoam">last:</span>       <span class="text-gray-500">/* last child */</span>
+<span class="text-seafoam">odd:</span>        <span class="text-gray-500">/* odd children */</span>
+<span class="text-seafoam">even:</span>       <span class="text-gray-500">/* even children */</span>
+
+<span class="text-seafoam">dark:</span>       <span class="text-gray-500">/* dark mode */</span>
+<span class="text-seafoam">print:</span>      <span class="text-gray-500">/* print styles */</span>
+
+<span class="text-gray-500">/* Combine variants */</span>
+<span class="text-seafoam">md:hover:</span><span class="text-coral">bg-blue-500</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        <!-- END BASICS TAB -->
 
         <!-- ============================================== -->
-        <!-- PARENT (FLEX CONTAINER) PROPERTIES            -->
+        <!-- FLEXBOX TAB                                    -->
         <!-- ============================================== -->
+        <div id="flexbox-tab" class="tab-content">
+
+            <!-- Introduction -->
+            <section class="mb-16">
+                <h2 class="text-4xl font-bold mb-6 text-white">CSS Flexbox → Tailwind</h2>
+                <p class="text-gray-300 text-lg max-w-3xl mb-6">
+                    A quick reference guide mapping CSS Flexbox properties to their Tailwind CSS utility classes. 
+                    Perfect for presentations and day-to-day development.
+                </p>
+                <div class="flex gap-4 text-sm">
+                    <span class="px-3 py-1 rounded-full bg-seafoam/20 text-seafoam border border-seafoam/30">Parent Properties</span>
+                    <span class="px-3 py-1 rounded-full bg-coral/20 text-coral border border-coral/30">Child Properties</span>
+                </div>
+            </section>
+
+            <!-- ============================================== -->
+            <!-- PARENT (FLEX CONTAINER) PROPERTIES            -->
+            <!-- ============================================== -->
 
         <div class="mb-8">
             <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Parent (Flex Container) Properties</h3>
@@ -103,7 +621,7 @@
         </div>
 
         <!-- display -->
-        <section id="display" class="mb-12 scroll-mt-32">
+        <section id="flex-display" class="mb-12 scroll-mt-32">
             <div class="flex items-center gap-3 mb-4">
                 <h4 class="text-2xl font-semibold text-white">display</h4>
                 <span class="text-xs px-2 py-0.5 rounded bg-seafoam/20 text-seafoam">container</span>
@@ -474,7 +992,7 @@
         </section>
 
         <!-- flex (shorthand) -->
-        <section id="flex" class="mb-12 scroll-mt-32">
+        <section id="flex-shorthand" class="mb-12 scroll-mt-32">
             <div class="flex items-center gap-3 mb-4">
                 <h4 class="text-2xl font-semibold text-white">flex</h4>
                 <span class="text-xs px-2 py-0.5 rounded bg-gray-600/50 text-gray-400">shorthand</span>
@@ -627,13 +1145,16 @@
             </div>
         </section>
 
+        </div>
+        <!-- END FLEXBOX TAB -->
+
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-gray-800 py-8">
         <div class="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
-            <p>Reference based on <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" class="text-seafoam hover:underline" target="_blank">CSS-Tricks Flexbox Guide</a></p>
-            <p class="mt-2">Built with Tailwind CSS</p>
+            <p>Flexbox section based on <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" class="text-seafoam hover:underline" target="_blank">CSS-Tricks Flexbox Guide</a></p>
+            <p class="mt-2">Built with <a href="https://tailwindcss.com" class="text-seafoam hover:underline" target="_blank">Tailwind CSS</a></p>
         </div>
     </footer>
 
