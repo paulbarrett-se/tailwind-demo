@@ -1,14 +1,28 @@
-# Tailwind CSS Flexbox Reference Guide
+# Tailwind CSS Reference Guide
 
-A quick-reference guide mapping CSS Flexbox properties to their Tailwind CSS utility class equivalents. Built for presentations, onboarding, and everyday development.
+A quick-reference guide for Tailwind CSS utility classes.
 
 ## What This Project Does
 
-This project provides a single-page reference that:
+This project provides a single-page, tabbed reference that covers:
 
-- **Maps CSS to Tailwind** — Side-by-side comparisons showing vanilla CSS flexbox properties and their Tailwind equivalents
-- **Covers all flexbox properties** — Both parent (container) and child (item) properties
-- **Serves as a quick lookup** — Sticky navigation and a summary table for fast reference during development
+### Basics Tab
+Essential Tailwind utilities for everyday development:
+- **Spacing** — `p-*`, `m-*`, `px-*`, `space-x-*`, negative margins, auto margins
+- **Sizing** — `w-*`, `h-*`, `min-w-*`, `max-h-*`, `size-*`
+- **Colors** — `text-{color}-{shade}`, `bg-*`, full color palette reference
+- **Typography** — `text-{size}`, `font-{weight}`, `leading-*`, `tracking-*`, alignment
+- **Borders & Rounded** — `border-*`, `rounded-*`, `divide-*`
+- **Display & Visibility** — `block`, `hidden`, `invisible`, `overflow-*`
+- **Responsive Prefixes** — `sm:`, `md:`, `lg:`, `xl:`, `2xl:` with mobile-first explanation
+- **State Variants** — `hover:`, `focus:`, `disabled:`, `group-hover:`, `dark:`, and more
+
+### Flexbox Tab
+Complete CSS Flexbox to Tailwind mapping:
+- **Parent (Container) Properties** — `flex`, `flex-direction`, `flex-wrap`, `justify-content`, `align-items`, `align-content`, `gap`
+- **Child (Item) Properties** — `order`, `flex-grow`, `flex-shrink`, `flex-basis`, `flex` shorthand, `align-self`
+- Side-by-side CSS vs Tailwind comparisons
+- Quick reference table
 
 ## What is Tailwind CSS?
 
