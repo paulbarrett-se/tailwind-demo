@@ -16,6 +16,8 @@ Essential Tailwind utilities for everyday development:
 - **Display & Visibility** — `block`, `hidden`, `invisible`, `overflow-*`
 - **Responsive Prefixes** — `sm:`, `md:`, `lg:`, `xl:`, `2xl:` with mobile-first explanation
 - **State Variants** — `hover:`, `focus:`, `disabled:`, `group-hover:`, `dark:`, and more
+- **Theme Customization** — `tailwind.config.js` for custom colors, spacing, fonts, and breakpoints
+- **@apply Component Extraction** — When and how to extract utilities into reusable CSS classes
 
 ### Flexbox Tab
 Complete CSS Flexbox to Tailwind mapping:

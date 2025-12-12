@@ -120,6 +120,9 @@
                 <li><a href="#display-visibility" class="text-gray-400 hover:text-seafoam transition-colors">Display</a></li>
                 <li><a href="#responsive" class="text-gray-400 hover:text-coral transition-colors">Responsive</a></li>
                 <li><a href="#states" class="text-gray-400 hover:text-coral transition-colors">States</a></li>
+                <li class="text-gray-600">|</li>
+                <li><a href="#theme" class="text-gray-400 hover:text-seafoam transition-colors">Theme</a></li>
+                <li><a href="#apply" class="text-gray-400 hover:text-seafoam transition-colors">@apply</a></li>
             </ul>
         </div>
     </nav>
@@ -625,6 +628,185 @@
 <span class="text-gray-500">/* Combine variants */</span>
 <span class="text-seafoam">md:hover:</span><span class="text-coral">bg-blue-500</span></code></pre>
                     </div>
+                </div>
+            </section>
+
+            <!-- THEME CUSTOMIZATION -->
+            <section id="theme" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">Theme Customization</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Customize Tailwind's design system via <code class="text-seafoam">tailwind.config.js</code>. Use <code class="text-coral">theme.extend</code> to add values while keeping defaults, or <code class="text-coral">theme</code> to replace entirely.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Extend vs Override</div>
+                        <pre class="font-mono text-sm text-gray-300"><code><span class="text-gray-500">// tailwind.config.js</span>
+module.exports = {
+  theme: {
+    <span class="text-coral">extend</span>: {
+      <span class="text-gray-500">// Adds TO existing values</span>
+      colors: { brand: <span class="text-green-400">'#2f855a'</span> }
+    },
+    <span class="text-coral">colors</span>: {
+      <span class="text-gray-500">// REPLACES all colors</span>
+      black: <span class="text-green-400">'#000'</span>,
+      white: <span class="text-green-400">'#fff'</span>
+    }
+  }
+}</code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Custom Colors</div>
+                        <pre class="font-mono text-sm text-gray-300"><code><span class="text-gray-500">// Add brand colors</span>
+theme: {
+  extend: {
+    colors: {
+      brand: {
+        light: <span class="text-green-400">'#4ade80'</span>,
+        DEFAULT: <span class="text-green-400">'#22c55e'</span>,
+        dark: <span class="text-green-400">'#16a34a'</span>
+      },
+      midnight: <span class="text-green-400">'#0f172a'</span>
+    }
+  }
+}
+<span class="text-gray-500">// Usage: bg-brand, text-brand-light</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Custom Spacing</div>
+                        <pre class="font-mono text-sm text-gray-300"><code>theme: {
+  extend: {
+    spacing: {
+      <span class="text-green-400">'18'</span>: <span class="text-green-400">'4.5rem'</span>,    <span class="text-gray-500">// 72px</span>
+      <span class="text-green-400">'88'</span>: <span class="text-green-400">'22rem'</span>,     <span class="text-gray-500">// 352px</span>
+      <span class="text-green-400">'128'</span>: <span class="text-green-400">'32rem'</span>    <span class="text-gray-500">// 512px</span>
+    }
+  }
+}
+
+<span class="text-gray-500">// Usage: p-18, m-88, w-128, h-128</span></code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Custom Fonts</div>
+                        <pre class="font-mono text-sm text-gray-300"><code>theme: {
+  extend: {
+    fontFamily: {
+      sans: [<span class="text-green-400">'Inter'</span>, <span class="text-green-400">'system-ui'</span>],
+      display: [<span class="text-green-400">'Poppins'</span>],
+      mono: [<span class="text-green-400">'JetBrains Mono'</span>]
+    }
+  }
+}
+
+<span class="text-gray-500">// Usage: font-sans, font-display, font-mono</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                    <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Custom Breakpoints (Screens)</div>
+                    <pre class="font-mono text-sm text-gray-300"><code>theme: {
+  screens: {
+    <span class="text-green-400">'xs'</span>: <span class="text-green-400">'475px'</span>,     <span class="text-gray-500">// Add extra-small breakpoint</span>
+    <span class="text-green-400">'sm'</span>: <span class="text-green-400">'640px'</span>,
+    <span class="text-green-400">'md'</span>: <span class="text-green-400">'768px'</span>,
+    <span class="text-green-400">'lg'</span>: <span class="text-green-400">'1024px'</span>,
+    <span class="text-green-400">'xl'</span>: <span class="text-green-400">'1280px'</span>,
+    <span class="text-green-400">'2xl'</span>: <span class="text-green-400">'1536px'</span>,
+    <span class="text-green-400">'3xl'</span>: <span class="text-green-400">'1800px'</span>    <span class="text-gray-500">// Add extra-large breakpoint</span>
+  }
+}
+<span class="text-gray-500">// Usage: xs:hidden, 3xl:grid-cols-4</span></code></pre>
+                </div>
+
+                <div class="mt-4 p-4 bg-seafoam/10 border border-seafoam/30 rounded-lg">
+                    <p class="text-sm text-seafoam font-medium mb-1">CDN Tip</p>
+                    <p class="text-sm text-gray-300">When using the Tailwind CDN, configure via <code class="text-coral">tailwind.config = { ... }</code> in a <code class="text-coral">&lt;script&gt;</code> tag instead of a config file.</p>
+                </div>
+            </section>
+
+            <!-- @APPLY COMPONENT EXTRACTION -->
+            <section id="apply" class="mb-12 scroll-mt-32">
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-seafoam uppercase tracking-wider mb-2">@apply Component Extraction</h3>
+                    <div class="h-px bg-gradient-to-r from-seafoam to-transparent"></div>
+                </div>
+                
+                <p class="text-gray-400 mb-6">Extract repeated utility patterns into reusable CSS classes using the <code class="text-coral">@apply</code> directive. Use sparingly—utility classes are preferred for most cases.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div class="code-block rounded-lg p-4 border border-gray-700/50">
+                        <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">Basic Syntax</div>
+                        <pre class="font-mono text-sm text-gray-300"><code><span class="text-gray-500">/* In your CSS file */</span>
+.btn {
+  <span class="text-coral">@apply</span> px-4 py-2 rounded font-medium;
+  <span class="text-coral">@apply</span> transition-colors duration-200;
+}
+
+.card {
+  <span class="text-coral">@apply</span> bg-white rounded-lg shadow-md p-6;
+}
+
+<span class="text-gray-500">/* Can combine with regular CSS */</span>
+.custom {
+  <span class="text-coral">@apply</span> flex items-center;
+  margin-top: 2.5rem;
+}</code></pre>
+                    </div>
+                    <div class="code-block rounded-lg p-4 border border-seafoam/30">
+                        <div class="text-xs text-seafoam uppercase tracking-wider mb-2">Button Component Example</div>
+                        <pre class="font-mono text-sm text-gray-300"><code><span class="text-gray-500">/* styles.css */</span>
+.btn {
+  <span class="text-coral">@apply</span> px-4 py-2 rounded-lg font-medium;
+  <span class="text-coral">@apply</span> transition-all duration-200;
+  <span class="text-coral">@apply</span> focus:outline-none focus:ring-2;
+}
+
+.btn-primary {
+  <span class="text-coral">@apply</span> btn bg-blue-500 text-white;
+  <span class="text-coral">@apply</span> hover:bg-blue-600;
+  <span class="text-coral">@apply</span> focus:ring-blue-300;
+}
+
+.btn-secondary {
+  <span class="text-coral">@apply</span> btn bg-gray-200 text-gray-800;
+  <span class="text-coral">@apply</span> hover:bg-gray-300;
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="code-block rounded-lg p-4 border border-gray-700/50 mb-6">
+                    <div class="text-xs text-gray-500 uppercase tracking-wider mb-2">When to Use @apply</div>
+                    <div class="grid md:grid-cols-2 gap-6 text-sm">
+                        <div>
+                            <p class="text-green-400 font-medium mb-2">Good Use Cases</p>
+                            <ul class="text-gray-300 space-y-1">
+                                <li>• Base button/input styles in component libraries</li>
+                                <li>• Repeated patterns used 10+ times</li>
+                                <li>• Third-party components you can't add classes to</li>
+                                <li>• Typography base styles (prose, headings)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="text-red-400 font-medium mb-2">Avoid Using For</p>
+                            <ul class="text-gray-300 space-y-1">
+                                <li>• One-off styles (just use utilities)</li>
+                                <li>• Styles you might need to override later</li>
+                                <li>• Every component (defeats purpose of utilities)</li>
+                                <li>• Things easily done with utilities inline</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-coral/10 border border-coral/30 rounded-lg">
+                    <p class="text-sm text-coral font-medium mb-1">Important Caveat</p>
+                    <p class="text-sm text-gray-300">Overusing <code class="text-coral">@apply</code> recreates the problems Tailwind solves: naming things, maintaining separate CSS files, and losing the co-location benefits. If you're reaching for <code class="text-coral">@apply</code> often, consider using component frameworks (React, Vue, Svelte) to extract reusable components instead.</p>
                 </div>
             </section>
 
